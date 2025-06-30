@@ -2,33 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Hash;
-use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
 class LoginController extends Controller
 {
 
-    
-    public function authenticate(Request $request)
+    #[OA\Post(
+        path: '/login',
+        summary: 'Вход',
+        requestBody: new OA\RequestBody(
+            content: [new OA\MediaType(mediaType: 'application/json',
+                schema: new OA\Schema(ref: '#/components/schemas/LoginRequest'))]
+        ),
+        tags: ['auth'],
+        responses: [
+            new OA\Response(response: 204, description: 'No content'),
+            new OA\Response(response: 422, description: 'Unprocessable Content')
+        ]
+    )]
+    public function authenticate(LoginRequest $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->all();
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return response()->json(["message" => "success"]);
+            return response()->noContent(204);
         }
 
         return response()->withErrors([
             'email' => 'Предоставленные учетные данные не соответствуют нашим записям.',
         ])->onlyInput('email');
+    }
+
+    #[OA\Get(
+        path: '/logout',
+        summary: 'Выход',
+        tags: ['auth'],
+        responses: [
+            new OA\Response(response: 204, description: 'No content'),
+            new OA\Response(response: 422, description: 'Unprocessable Content')
+        ]
+    )]
+    public function destroy(Request $request) 
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return response()->noContent(204);
     }
 
     #[OA\Post(
