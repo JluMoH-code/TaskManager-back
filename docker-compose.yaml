@@ -19,7 +19,7 @@ services:
       context: ./docker/development/php-fpm
       dockerfile: Dockerfile
     environment:
-      PHP_IDE_CONFIG: serverName=task-manager
+      PHP_IDE_CONFIG: serverName=api.task-manager
     user: "1000:1000"
     volumes:
       - ./api:/app
