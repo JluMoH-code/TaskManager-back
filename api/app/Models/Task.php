@@ -25,6 +25,10 @@ class Task extends Model
         'deadline',
     ];
 
+    protected $attributes = [
+        'active' => true,
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
