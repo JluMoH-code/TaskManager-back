@@ -6,3 +6,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/profile', [ProfileController::class, 'show'])->middleware('auth');
 Route::get('/tasks', [TaskController::class, 'getTasks'])->middleware('auth');
+Route::post('/task', [TaskController::class, 'createTask'])->middleware('auth');
