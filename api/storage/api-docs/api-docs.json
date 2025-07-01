@@ -126,6 +126,37 @@
                     }
                 }
             }
+        },
+        "/api/task": {
+            "post": {
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Создание задачи для авторизованного пользователя",
+                "operationId": "fc51dc8c4d8726cf188cd0a95bb8c992",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Созданная задача",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -166,6 +197,24 @@
                 },
                 "type": "object"
             },
+            "TaskCreateRequest": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "description"
+                    },
+                    "deadline": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-01-01 21:00:00"
+                    }
+                },
+                "type": "object"
+            },
             "ProfileResource": {
                 "properties": {
                     "id": {
@@ -201,7 +250,7 @@
                     "deadline": {
                         "type": "string",
                         "format": "date-time",
-                        "example": ""
+                        "example": "2025-01-01 21:00:00"
                     },
                     "active": {
                         "type": "boolean",
