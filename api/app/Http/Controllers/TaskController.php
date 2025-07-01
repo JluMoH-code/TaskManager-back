@@ -30,7 +30,7 @@ class TaskController extends Controller
     )]
     public function getTasks(Request $request) 
     {
-        $tasks = $request->user()->tasks()->get();
+        $tasks = $this->taskService->getTasksByUser($request->user());
         return response()->json(TaskResource::collection($tasks));
     }
 
