@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskCreateRequest;
+use App\Http\Requests\TaskFilterRequest;
 use App\Http\Resources\TaskResource;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
@@ -17,20 +18,52 @@ class TaskController extends Controller
         path: '/api/tasks',
         summary: 'Показ задач авторизованного пользователя',
         tags: ['profile'],
+        parameters: [
+            new OA\Parameter(
+                name: 'title',
+                in: 'query',
+                schema: new OA\Schema(type: 'string', example: 'title', nullable: true)
+            ),
+            new OA\Parameter(
+                name: 'deadline_from',
+                in: 'query',
+                schema: new OA\Schema(type: 'string', format: 'date-time', example: '2025-01-01 21:00:00', nullable: true)
+            ),
+            new OA\Parameter(
+                name: 'deadline_to',
+                in: 'query',
+                schema: new OA\Schema(type: 'string', format: 'date-time', example: '2026-01-01 21:00:00', nullable: true)
+            ),
+            new OA\Parameter(
+                name: 'sort_by',
+                in: 'query',
+                schema: new OA\Schema(type: 'string', example: 'title', enum: ['title', 'deadline'], nullable: true)
+            ),
+            new OA\Parameter(
+                name: 'sort_order',
+                in: 'query',
+                schema: new OA\Schema(type: 'string', example: 'asc', enum: ['asc', 'desc'], nullable: true)
+            ),
+            new OA\Parameter(
+                name: 'active_only',
+                in: 'query',
+                schema: new OA\Schema(type: 'boolean', example: false, nullable: true)
+            ),
+        ],
         responses: [
             new OA\Response(
                 response: 200, 
                 description: 'Список задач',
                 content: new OA\JsonContent(
                     type: 'array',
-                    items: new OA\Items(ref: '#/components/schemas/TaskResource')
+                    items: new OA\Items(ref: '#/components/schemas/TaskFilterRequest')
                 )
             ),
         ]
     )]
-    public function getTasks(Request $request) 
+    public function getTasks(TaskFilterRequest $request) 
     {
-        $tasks = $this->taskService->getTasksByUser($request->user());
+        $tasks = $this->taskService->getTasksByUser($request->user(), $request);
         return response()->json(TaskResource::collection($tasks));
     }
 

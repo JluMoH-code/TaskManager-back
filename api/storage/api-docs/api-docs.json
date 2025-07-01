@@ -110,6 +110,72 @@
                 ],
                 "summary": "Показ задач авторизованного пользователя",
                 "operationId": "d65f8818ec696dad558b47939034f1c5",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "title",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "deadline_from",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2025-01-01 21:00:00",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "deadline_to",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time",
+                            "example": "2026-01-01 21:00:00",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "title",
+                                "deadline"
+                            ],
+                            "example": "title",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "asc",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "active_only",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean",
+                            "example": false,
+                            "nullable": true
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Список задач",
@@ -118,7 +184,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/TaskResource"
+                                        "$ref": "#/components/schemas/TaskFilterRequest"
                                     }
                                 }
                             }
@@ -287,6 +353,51 @@
                         "type": "string",
                         "format": "date-time",
                         "example": "2025-01-01 21:00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskFilterRequest": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "title",
+                        "nullable": true
+                    },
+                    "deadline_from": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-01-01 21:00:00",
+                        "nullable": true
+                    },
+                    "deadline_to": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-01-01 21:00:00",
+                        "nullable": true
+                    },
+                    "sort_by": {
+                        "type": "string",
+                        "enum": [
+                            "title",
+                            "deadline"
+                        ],
+                        "example": "title",
+                        "nullable": true
+                    },
+                    "sort_order": {
+                        "type": "string",
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ],
+                        "example": "asc",
+                        "nullable": true
+                    },
+                    "active_only": {
+                        "type": "boolean",
+                        "example": false,
+                        "nullable": true
                     }
                 },
                 "type": "object"
