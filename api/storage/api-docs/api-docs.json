@@ -94,11 +94,35 @@
                 "tags": [
                     "profile"
                 ],
-                "summary": "Пока информации о текущем авторизованном пользователе",
+                "summary": "Показ информации о текущем авторизованном пользователе",
                 "operationId": "ede45b19680d6fb1319013a741a05734",
                 "responses": {
                     "200": {
                         "$ref": "#/components/schemas/ProfileResource"
+                    }
+                }
+            }
+        },
+        "/api/tasks": {
+            "get": {
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Показ задач авторизованного пользователя",
+                "operationId": "d65f8818ec696dad558b47939034f1c5",
+                "responses": {
+                    "200": {
+                        "description": "Список задач",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TaskResource"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -156,6 +180,32 @@
                         "type": "string",
                         "format": "email",
                         "example": "test@test.com"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "description"
+                    },
+                    "deadline": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": ""
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "example": "true"
                     }
                 },
                 "type": "object"
