@@ -18,4 +18,19 @@ class TaskService
         $task = $user->tasks()->create($request->all());
         return $task;
     }
+
+    public function updateTask(int $id, TaskCreateRequest $request, User $user)
+    {
+        $task = $user->tasks()->findOrFail($id);
+        $task->update($request->all());
+        return $task;
+    }
+
+    public function toggleActiveTask(int $id, User $user)
+    {
+        $task = $user->tasks()->findOrFail($id);
+        $task->active = !$task->active;
+        $task->save();
+        return $task;
+    }
 }

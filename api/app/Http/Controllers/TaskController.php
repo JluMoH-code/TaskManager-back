@@ -55,4 +55,62 @@ class TaskController extends Controller
         $task = $this->taskService->createForUser($request, $request->user());
         return response()->json(new TaskResource($task));  
     }
+
+    #[OA\Put(
+        path: '/api/task/{id}',
+        summary: 'Редактирование задачи авторизованного пользователя',
+        tags: ['profile'],
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'ID задачи',
+                schema: new OA\Schema(type: 'integer', example: 42)
+            ),
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(ref: '#/components/schemas/TaskCreateRequest')
+        ),
+        responses: [
+            new OA\Response(
+                response: 200, 
+                description: 'Созданная задача',
+                content: new OA\JsonContent(ref: '#/components/schemas/TaskResource'),
+            ),
+        ]
+    )]
+    public function updateTask(int $id, TaskCreateRequest $request) 
+    {
+        $task = $this->taskService->updateTask($id, $request, $request->user());
+        return response()->json(new TaskResource($task)); 
+    }
+
+    #[OA\Patch(
+        path: '/api/task/{id}/toggle',
+        summary: 'Редактирование задачи авторизованного пользователя',
+        tags: ['profile'],
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'ID задачи',
+                schema: new OA\Schema(type: 'integer', example: 42)
+            ),
+        ],
+        responses: [
+            new OA\Response(
+                response: 200, 
+                description: 'Созданная задача',
+                content: new OA\JsonContent(ref: '#/components/schemas/TaskResource'),
+            ),
+        ]
+    )]
+    public function toggleActiveTask(int $id, Request $request)
+    {
+        $task = $this->taskService->toggleActiveTask($id, $request->user());
+        return response()->json(new TaskResource($task)); 
+    }
 }

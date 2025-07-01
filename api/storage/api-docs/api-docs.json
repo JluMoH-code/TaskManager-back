@@ -157,6 +157,82 @@
                     }
                 }
             }
+        },
+        "/api/task/{id}": {
+            "put": {
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Редактирование задачи авторизованного пользователя",
+                "operationId": "02617bdd4f940435e1a575f1aeb43bb2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID задачи",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 42
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Созданная задача",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/task/{id}/toggle": {
+            "patch": {
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Редактирование задачи авторизованного пользователя",
+                "operationId": "abc557d6ba991b0912677249b274a25b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID задачи",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 42
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Созданная задача",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TaskResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
