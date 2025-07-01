@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProfileResource;
 use Illuminate\Http\Request;
-use Log;
 use OpenApi\Attributes as OA;
 
 class ProfileController extends Controller
@@ -21,6 +20,6 @@ class ProfileController extends Controller
     public function show(Request $request) 
     {
         $user = $request->user();
-        return response()->json(new ProfileResource($user), 204);
+        return response()->json(new ProfileResource($user));
     }
 }
