@@ -88,6 +88,20 @@
                     }
                 }
             }
+        },
+        "/api/profile": {
+            "get": {
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Пока информации о текущем авторизованном пользователе",
+                "operationId": "ede45b19680d6fb1319013a741a05734",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/schemas/ProfileResource"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -127,6 +141,24 @@
                     }
                 },
                 "type": "object"
+            },
+            "ProfileResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "test@test.com"
+                    }
+                },
+                "type": "object"
             }
         }
     },
@@ -138,6 +170,10 @@
         {
             "name": "csrf",
             "description": "csrf"
+        },
+        {
+            "name": "profile",
+            "description": "profile"
         }
     ]
 }
