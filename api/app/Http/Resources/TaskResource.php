@@ -13,6 +13,7 @@ use Openapi\Attributes as OA;
         'description' => new OA\Property(property: 'description', type: 'string', example: 'description'),
         'deadline' => new OA\Property(property: 'deadline', type: 'datetime', example: '2025-01-01 21:00:00'),
         'active' => new OA\Property(property: 'active', type: 'boolean', example: 'true'),
+        'priority' => new OA\Property(property: 'priority', type: 'string', example: 'low'),
     ]
 )]
 class TaskResource extends JsonResource
@@ -30,6 +31,7 @@ class TaskResource extends JsonResource
             'description' => $this->description,
             'deadline' => $this->deadline,
             'active' => $this->active,
+            'priority' => $this->priority,
         ];
     }
 }

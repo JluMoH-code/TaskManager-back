@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\PriorityTaskEnum;
 use App\Http\Requests\TaskCreateRequest;
 use App\Http\Requests\TaskFilterRequest;
 use App\Models\User;
@@ -9,12 +10,19 @@ use App\Models\User;
 class TaskService
 {
 
-    public function getTasksByUser(User $user, TaskFilterRequest $request) 
+    public function getTasksByUser(User $user, TaskFilterRequest $request)
     {
         $query = $user->tasks();
 
         if ($request->filled('title')) {
             $query->where('title', 'ilike', '%'. $request->title .'%');
+        }
+
+        if ($request->filled('priority')) {
+            $priorities = array_filter($request->priority);
+            if (!empty($priorities)) {
+                $query->whereIn('priority', $priorities);
+            }
         }
 
         if ($request->filled('deadline_from')) {
@@ -32,7 +40,19 @@ class TaskService
         $sortBy = $request->sort_by ?? 'created_at';
         $sortOrder = $request->sort_order ?? 'desc';
 
-        $query->orderBy($sortBy, $sortOrder);
+        if ($sortBy === 'priority') {
+            $orderByCase = "CASE priority ";
+            foreach (PriorityTaskEnum::sortWeights() as $value => $weight) {
+                $orderByCase .= "WHEN '{$value}' THEN {$weight} ";
+            }
+            $orderByCase .= "ELSE 0 END";
+
+            $orderRaw = $orderByCase . " " . $sortOrder;
+
+            $query->orderByRaw($orderRaw);
+        } else {
+            $query->orderBy($sortBy, $sortOrder);
+        }
 
         return $query->get();
     }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\PriorityTaskEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class TaskFactory extends Factory
             'description' => $this->faker->sentence(),
             'active' => $this->faker->boolean(),
             'deadline' => $this->faker->dateTimeInInterval("now", "+5 days"),
+            'priority' => $this->faker->randomElement(PriorityTaskEnum::values()),
         ];
     }
 }

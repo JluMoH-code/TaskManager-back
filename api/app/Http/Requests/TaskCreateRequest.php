@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\PriorityTaskEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Openapi\Attributes as OA;
 
 #[OA\Schema(
@@ -10,6 +12,7 @@ use Openapi\Attributes as OA;
         'title' => new OA\Property(property: 'title', type: 'string', example: 'title'),
         'description' => new OA\Property(property: 'description', type: 'string', example: 'description'),
         'deadline' => new OA\Property(property: 'deadline', type: 'datetime', example: '2025-01-01 21:00:00'),
+        'priority' => new OA\Property(property: 'priority' ,ref: '#/components/schemas/PriorityTaskEnum'),
     ]
 )]
 class TaskCreateRequest extends FormRequest
@@ -33,6 +36,7 @@ class TaskCreateRequest extends FormRequest
             'title' => ['required', 'string', 'min:3'],
             'description' => ['string', 'min:6'],
             'deadline' => ['string', 'date', 'after_or_equal:today'],
+            'priority' => ['string', Rule::in(PriorityTaskEnum::values())],
         ];
     }
 }

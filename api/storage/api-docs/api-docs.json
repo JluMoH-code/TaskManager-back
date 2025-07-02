@@ -121,6 +121,15 @@
                         }
                     },
                     {
+                        "name": "priority",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "low,high",
+                            "nullable": true
+                        }
+                    },
+                    {
                         "name": "deadline_from",
                         "in": "query",
                         "schema": {
@@ -147,7 +156,8 @@
                             "type": "string",
                             "enum": [
                                 "title",
-                                "deadline"
+                                "deadline",
+                                "priority"
                             ],
                             "example": "title",
                             "nullable": true
@@ -184,7 +194,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/TaskFilterRequest"
+                                        "$ref": "#/components/schemas/TaskResource"
                                     }
                                 }
                             }
@@ -303,6 +313,20 @@
     },
     "components": {
         "schemas": {
+            "PriorityTaskEnum": {
+                "description": "low: Минимальный, medium: Средний, high: Наивысший",
+                "type": "string",
+                "enum": [
+                    "low",
+                    "medium",
+                    "high"
+                ],
+                "x-enum-varnames": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH"
+                ]
+            },
             "LoginRequest": {
                 "properties": {
                     "email": {
@@ -353,6 +377,9 @@
                         "type": "string",
                         "format": "date-time",
                         "example": "2025-01-01 21:00:00"
+                    },
+                    "priority": {
+                        "$ref": "#/components/schemas/PriorityTaskEnum"
                     }
                 },
                 "type": "object"
@@ -362,6 +389,11 @@
                     "title": {
                         "type": "string",
                         "example": "title",
+                        "nullable": true
+                    },
+                    "priority": {
+                        "type": "string",
+                        "example": "low,high",
                         "nullable": true
                     },
                     "deadline_from": {
@@ -442,6 +474,10 @@
                     "active": {
                         "type": "boolean",
                         "example": "true"
+                    },
+                    "priority": {
+                        "type": "string",
+                        "example": "low"
                     }
                 },
                 "type": "object"
