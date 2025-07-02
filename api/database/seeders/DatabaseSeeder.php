@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        User::factory()->create(['email' => 'test@test.com']);
         User::factory()->count(5)->create();
         $this->call(TaskSeeder::class);
     }
