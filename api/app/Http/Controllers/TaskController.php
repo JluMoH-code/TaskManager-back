@@ -30,6 +30,11 @@ class TaskController extends Controller
                 schema: new OA\Schema(type: 'string', example: 'low,high', nullable: true)
             ),
             new OA\Parameter(
+                name: 'tags',
+                in: 'query',
+                schema: new OA\Schema(type: 'string', example: 'tag1,tag2,tag3', nullable: true)
+            ),
+            new OA\Parameter(
                 name: 'deadline_from',
                 in: 'query',
                 schema: new OA\Schema(type: 'string', format: 'date-time', example: '2025-01-01 21:00:00', nullable: true)

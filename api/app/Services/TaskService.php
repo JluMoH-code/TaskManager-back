@@ -25,6 +25,17 @@ class TaskService
             }
         }
 
+        if ($request->filled('tags')) {
+            $tags = array_filter($request->tags);
+            if (!empty($tags)) {
+                foreach ($tags as $tag) {
+                    $query->whereHas('tags', function ($query) use ($tag) {
+                        $query->where('tags.title', $tag);
+                    });
+                }
+            }
+        }
+
         if ($request->filled('deadline_from')) {
             $query->where('deadline', '>=', $request->deadline_from);
         }

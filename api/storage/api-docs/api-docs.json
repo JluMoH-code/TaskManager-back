@@ -154,6 +154,15 @@
                         }
                     },
                     {
+                        "name": "tags",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "tag1,tag2,tag3",
+                            "nullable": true
+                        }
+                    },
+                    {
                         "name": "deadline_from",
                         "in": "query",
                         "schema": {
@@ -418,6 +427,11 @@
                     "priority": {
                         "type": "string",
                         "example": "low,high",
+                        "nullable": true
+                    },
+                    "tags": {
+                        "type": "string",
+                        "example": "tag",
                         "nullable": true
                     },
                     "deadline_from": {
