@@ -103,6 +103,30 @@
                 }
             }
         },
+        "/api/tags": {
+            "get": {
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Показ тегов авторизованного пользователя",
+                "operationId": "33fda0e59cecd630d9007c1c67295c14",
+                "responses": {
+                    "200": {
+                        "description": "Список тегов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TagResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tasks": {
             "get": {
                 "tags": [
@@ -265,7 +289,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Созданная задача",
+                        "description": "Отредактированная задача",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -448,6 +472,23 @@
                         "type": "string",
                         "format": "email",
                         "example": "test@test.com"
+                    }
+                },
+                "type": "object"
+            },
+            "TagResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "title"
+                    },
+                    "color": {
+                        "type": "string",
+                        "example": "#FFFFFF"
                     }
                 },
                 "type": "object"

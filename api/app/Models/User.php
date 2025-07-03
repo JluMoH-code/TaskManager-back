@@ -78,4 +78,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class);
     }
+
+    public function tags()
+    {
+        return Tag::whereHas('tasks', function ($query) {
+            $query->where('user_id', $this->id);
+        })->distinct();
+    }
 }
