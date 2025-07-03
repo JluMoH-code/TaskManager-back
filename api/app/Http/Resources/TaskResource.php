@@ -14,6 +14,7 @@ use Openapi\Attributes as OA;
         'deadline' => new OA\Property(property: 'deadline', type: 'datetime', example: '2025-01-01 21:00:00'),
         'active' => new OA\Property(property: 'active', type: 'boolean', example: 'true'),
         'priority' => new OA\Property(property: 'priority', type: 'string', example: 'low'),
+        'tags' => new OA\Property(property: 'tags', type: 'array', items: new OA\Items(ref: '#/components/schemas/TagResource')),
     ]
 )]
 class TaskResource extends JsonResource
@@ -32,6 +33,7 @@ class TaskResource extends JsonResource
             'deadline' => $this->deadline,
             'active' => $this->active,
             'priority' => $this->priority,
+            'tags' => TagResource::collection($this->tags),
         ];
     }
 }

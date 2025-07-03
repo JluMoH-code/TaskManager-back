@@ -519,6 +519,12 @@
                     "priority": {
                         "type": "string",
                         "example": "low"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TagResource"
+                        }
                     }
                 },
                 "type": "object"
