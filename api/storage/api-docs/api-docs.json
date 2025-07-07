@@ -404,15 +404,30 @@
                     },
                     "description": {
                         "type": "string",
-                        "example": "description"
+                        "example": "description",
+                        "nullable": true
                     },
                     "deadline": {
                         "type": "string",
                         "format": "date-time",
-                        "example": "2025-01-01 21:00:00"
+                        "example": "2025-01-01 21:00:00",
+                        "nullable": true
                     },
                     "priority": {
-                        "$ref": "#/components/schemas/PriorityTaskEnum"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/PriorityTaskEnum"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "tag"
+                        },
+                        "nullable": true
                     }
                 },
                 "type": "object"

@@ -70,14 +70,21 @@ class TaskService
 
     public function createForUser(TaskCreateRequest $request, User $user)
     {
-        $task = $user->tasks()->create($request->all());
+        $task = $user->tasks()->create($request->except('tags'));
+
+        $task->syncTags($request->input('tags', []));
+
         return $task;
     }
 
     public function updateTask(int $id, TaskCreateRequest $request, User $user)
     {
         $task = $user->tasks()->findOrFail($id);
-        $task->update($request->all());
+
+        $task->update($request->except('tags'));
+
+        $task->syncTags($request->input('tags', []));
+        
         return $task;
     }
 
