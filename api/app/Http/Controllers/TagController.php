@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagSearchRequest;
 use App\Http\Resources\TagResource;
 use App\Services\TagService;
 use Illuminate\Http\Request;
@@ -16,6 +17,13 @@ class TagController extends Controller
         path: '/api/tags',
         summary: 'Показ тегов авторизованного пользователя',
         tags: ['profile'],
+        parameters: [
+            new OA\Parameter(
+                name: 'search',
+                in: 'query',
+                schema: new OA\Schema(type: 'string', example: 'title', nullable: true)
+            ),
+        ],
         responses: [
             new OA\Response(
                 response: 200,
@@ -27,9 +35,9 @@ class TagController extends Controller
             ),
         ]
     )]
-    public function getTags(Request $request) 
+    public function getTags(TagSearchRequest $request) 
     {
-        $tags = $this->tagService->getTagsForUser($request->user());
+        $tags = $this->tagService->getTagsForUser($request, $request->user());
         return response()->json(TagResource::collection($tags));
     }
 }

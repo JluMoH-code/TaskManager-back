@@ -2,13 +2,20 @@
 
 namespace App\Services;
 
+use App\Http\Requests\TagSearchRequest;
 use App\Models\User;
 
 class TagService 
 {
-    public function getTagsForUser(User $user)
+    public function getTagsForUser(TagSearchRequest $request, User $user)
     {
-        $tags = $user->tags()->orderBy('id')->get();
+        $query = $user->tags();
+
+        if ($request->filled('search')) {
+            $query->where('title', 'ilike', $request->search .'%');
+        }
+
+        $tags = $query->orderBy('id')->get();
         return $tags;
     }
 }

@@ -110,6 +110,17 @@
                 ],
                 "summary": "Показ тегов авторизованного пользователя",
                 "operationId": "33fda0e59cecd630d9007c1c67295c14",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "title",
+                            "nullable": true
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Список тегов",
@@ -392,6 +403,15 @@
                     "password_confirmation": {
                         "type": "string",
                         "example": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "TagSearchRequest": {
+                "properties": {
+                    "search": {
+                        "type": "string",
+                        "example": "title"
                     }
                 },
                 "type": "object"
