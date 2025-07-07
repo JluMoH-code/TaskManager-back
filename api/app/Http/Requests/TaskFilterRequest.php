@@ -11,6 +11,7 @@ use OpenApi\Attributes as OA;
     properties: [
         'title' => new OA\Property(property: 'title', type: 'string', example: 'title', nullable: true),
         'priority' => new OA\Property(property: 'priority', type: 'string', example: 'low,high', nullable: true),
+        'tags' => new OA\Property(property: 'tags', type: 'string', example: 'tag', nullable: true),
         'deadline_from' => new OA\Property(property: 'deadline_from', type: 'date', example: '2025-01-01 21:00:00', nullable: true),
         'deadline_to' => new OA\Property(property: 'deadline_to', type: 'date', example: '2026-01-01 21:00:00', nullable: true),
         'sort_by' => new OA\Property(property: 'sort_by', type: 'string', enum: ['title', 'deadline'], example: 'title', nullable: true),
@@ -39,6 +40,8 @@ class TaskFilterRequest extends FormRequest
             'title' => ['nullable', 'string'],
             'priority' => ['nullable', 'array'],
             'priority.*' => [Rule::in(PriorityTaskEnum::values())],
+            'tags' => ['nullable', 'array'],
+            'tags.*' => ['string'],
             'deadline_from' => ['nullable', 'date'],
             'deadline_to' => ['nullable', 'date', 'after_or_equal:deadline_from'],
             'sort_by' => ['nullable', 'string', 'in:title,deadline,priority'],
@@ -52,6 +55,7 @@ class TaskFilterRequest extends FormRequest
         $this->merge([
             'active_only' => filter_var($this->input('active_only'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
             'priority' => explode(',', $this->input('priority')),
+            'tags' => explode(',', $this->input('tags')),
         ]);
     }
 }

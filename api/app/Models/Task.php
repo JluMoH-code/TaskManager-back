@@ -39,4 +39,20 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function syncTags(array $tags)
+    {
+        if (empty($tags)) return;
+        
+        $tagIds = collect($tags)
+                ->map(fn ($title) => Tag::firstOrCreate(['title' => $title])->id)
+                ->toArray();
+
+        $this->tags()->sync($tagIds);
+    }
 }

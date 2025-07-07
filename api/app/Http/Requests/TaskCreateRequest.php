@@ -10,9 +10,10 @@ use Openapi\Attributes as OA;
 #[OA\Schema(
     properties: [
         'title' => new OA\Property(property: 'title', type: 'string', example: 'title'),
-        'description' => new OA\Property(property: 'description', type: 'string', example: 'description'),
-        'deadline' => new OA\Property(property: 'deadline', type: 'datetime', example: '2025-01-01 21:00:00'),
-        'priority' => new OA\Property(property: 'priority' ,ref: '#/components/schemas/PriorityTaskEnum'),
+        'description' => new OA\Property(property: 'description', type: 'string', example: 'description', nullable: true),
+        'deadline' => new OA\Property(property: 'deadline', type: 'datetime', example: '2025-01-01 21:00:00', nullable: true),
+        'priority' => new OA\Property(property: 'priority' ,ref: '#/components/schemas/PriorityTaskEnum', nullable: true),
+        'tags' => new OA\Property(property: 'tags', type: 'array', items: new OA\Items(type: 'string', example: 'tag'), nullable: true),
     ]
 )]
 class TaskCreateRequest extends FormRequest
@@ -34,9 +35,11 @@ class TaskCreateRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'min:3'],
-            'description' => ['string', 'min:6'],
-            'deadline' => ['string', 'date', 'after_or_equal:today'],
-            'priority' => ['string', Rule::in(PriorityTaskEnum::values())],
+            'description' => ['nullable', 'string', 'min:6'],
+            'deadline' => ['nullable', 'string', 'date', 'after_or_equal:today'],
+            'priority' => ['nullable', 'string', Rule::in(PriorityTaskEnum::values())],
+            'tags' => ['nullable', 'array'],
+            'tags.*' => ['string', 'min:3'],
         ];
     }
 }

@@ -103,6 +103,41 @@
                 }
             }
         },
+        "/api/tags": {
+            "get": {
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Показ тегов авторизованного пользователя",
+                "operationId": "33fda0e59cecd630d9007c1c67295c14",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "title",
+                            "nullable": true
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список тегов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TagResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tasks": {
             "get": {
                 "tags": [
@@ -126,6 +161,15 @@
                         "schema": {
                             "type": "string",
                             "example": "low,high",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "tags",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "tag1,tag2,tag3",
                             "nullable": true
                         }
                     },
@@ -265,7 +309,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Созданная задача",
+                        "description": "Отредактированная задача",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -363,6 +407,15 @@
                 },
                 "type": "object"
             },
+            "TagSearchRequest": {
+                "properties": {
+                    "search": {
+                        "type": "string",
+                        "example": "title"
+                    }
+                },
+                "type": "object"
+            },
             "TaskCreateRequest": {
                 "properties": {
                     "title": {
@@ -371,15 +424,30 @@
                     },
                     "description": {
                         "type": "string",
-                        "example": "description"
+                        "example": "description",
+                        "nullable": true
                     },
                     "deadline": {
                         "type": "string",
                         "format": "date-time",
-                        "example": "2025-01-01 21:00:00"
+                        "example": "2025-01-01 21:00:00",
+                        "nullable": true
                     },
                     "priority": {
-                        "$ref": "#/components/schemas/PriorityTaskEnum"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/PriorityTaskEnum"
+                            }
+                        ],
+                        "nullable": true
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "tag"
+                        },
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -394,6 +462,11 @@
                     "priority": {
                         "type": "string",
                         "example": "low,high",
+                        "nullable": true
+                    },
+                    "tags": {
+                        "type": "string",
+                        "example": "tag",
                         "nullable": true
                     },
                     "deadline_from": {
@@ -452,6 +525,23 @@
                 },
                 "type": "object"
             },
+            "TagResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "title"
+                    },
+                    "color": {
+                        "type": "string",
+                        "example": "#FFFFFF"
+                    }
+                },
+                "type": "object"
+            },
             "TaskResource": {
                 "properties": {
                     "id": {
@@ -478,6 +568,12 @@
                     "priority": {
                         "type": "string",
                         "example": "low"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TagResource"
+                        }
                     }
                 },
                 "type": "object"
