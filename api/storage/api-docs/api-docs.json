@@ -138,6 +138,40 @@
                 }
             }
         },
+        "/api/tags/generate": {
+            "post": {
+                "tags": [
+                    "tags"
+                ],
+                "summary": "Генерация тегов для задачи",
+                "operationId": "a6e3c8a372b685dd50f46e6f3a55e0cc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TagGenerateAiRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Список тегов",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TagResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tasks": {
             "get": {
                 "tags": [
@@ -407,6 +441,20 @@
                 },
                 "type": "object"
             },
+            "TagGenerateAiRequest": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "description",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "TagSearchRequest": {
                 "properties": {
                     "search": {
@@ -592,6 +640,10 @@
         {
             "name": "profile",
             "description": "profile"
+        },
+        {
+            "name": "tags",
+            "description": "tags"
         }
     ]
 }

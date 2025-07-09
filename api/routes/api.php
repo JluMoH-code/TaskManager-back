@@ -12,3 +12,4 @@ Route::put('/task/{id}', [TaskController::class, 'updateTask'])->middleware('aut
 Route::patch('/task/{id}/toggle', [TaskController::class, 'toggleActiveTask'])->middleware('auth');
 
 Route::get('/tags', [TagController::class, 'getTags'])->middleware('auth');
+Route::post('/tags/generate', [TagController::class, 'generateAiTags'])->middleware('auth');
