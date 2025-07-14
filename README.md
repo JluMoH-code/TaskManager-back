@@ -30,7 +30,7 @@ Task Manager — это backend-приложение, разработанное
 > Требуется: Docker, Make
 
 ```bash
-git clone https://github.com/your-username/task-manager.git
+git clone https://github.com/JluMoH-code/TaskManager-back.git
 cd task-manager
 make up
 make command c="composer install"
