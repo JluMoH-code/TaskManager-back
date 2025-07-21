@@ -100,7 +100,7 @@ class TaskController extends Controller
     }
 
     #[OA\Put(
-        path: '/api/task/{id}',
+        path: '/api/tasks/{id}',
         summary: 'Редактирование задачи авторизованного пользователя',
         requestBody: new OA\RequestBody(
             required: true,
@@ -131,7 +131,7 @@ class TaskController extends Controller
     }
 
     #[OA\Patch(
-        path: '/api/task/{id}/toggle',
+        path: '/api/tasks/{id}/toggle',
         summary: 'Редактирование задачи авторизованного пользователя',
         tags: ['profile'],
         parameters: [
